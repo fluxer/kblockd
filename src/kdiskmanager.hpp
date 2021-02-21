@@ -10,7 +10,7 @@
 /*!
     Disk information holder, valid object is obtained via @p KDiskManager::info. If the device
     does not have a name, UUID or type it is not considered valid. Label and size are optional.
-    The size of the device is reported in Kilobytes
+    The size of the device is in Kilobytes
 
     @note It is up to the programmer to keep the integrity of the structure
     @note D-Bus signature for the type is <b>(ssssii)</b>
@@ -58,8 +58,8 @@ const QDBusArgument &operator<<(QDBusArgument &, const KDiskInfo &);
 const QDBusArgument &operator>>(const QDBusArgument &, KDiskInfo &);
 
 /*!
-    Block device (disk) manager, operates mostly with with device names, e.g. /dev/sda1 and
-    disk information type
+    Block device (disk) manager, operates mostly with device names, e.g. /dev/sda1 and disk
+    information type
 
     @see KDiskInfo
 
