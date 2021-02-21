@@ -153,10 +153,7 @@ class KDiskManagerPrivate : public QObject {
         KDiskManagerPrivate(QObject *parent = Q_NULLPTR);
         ~KDiskManagerPrivate();
 
-        udev *m_udev;
-        udev_monitor *m_monitor;
         QList<KDiskInfo> m_disks;
-        QDBusInterface *m_interface;
 
         KDiskInfo info(const QString &disk);
         bool call(const QString &method, const QString &argument);
@@ -169,13 +166,19 @@ class KDiskManagerPrivate : public QObject {
     protected:
         // reimplementation
         void timerEvent(QTimerEvent *event);
+
+    private:
+        udev *m_udev;
+        udev_monitor *m_monitor;
+        QDBusInterface *m_interface;
 };
 Q_GLOBAL_STATIC(KDiskManagerPrivate, diskManager);
 
 KDiskManagerPrivate::KDiskManagerPrivate(QObject *parent)
     : QObject(parent),
     m_udev(Q_NULLPTR),
-    m_monitor(Q_NULLPTR) {
+    m_monitor(Q_NULLPTR),
+    m_interface(Q_NULLPTR) {
     qRegisterMetaType<KDiskInfo>();
     qRegisterMetaType<QList<KDiskInfo> >();
     qDBusRegisterMetaType<KDiskInfo>();
