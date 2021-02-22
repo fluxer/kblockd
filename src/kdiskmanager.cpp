@@ -299,8 +299,8 @@ void KDiskManagerPrivate::timerEvent(QTimerEvent *event) {
             }
         } else if (qstrcmp(action, "remove") == 0) {
             /*
-                reusing disk info from already tracked disks since info
-                cannot be obtained once the device is gone
+                reusing disk info from already tracked disks since info cannot be obtained once
+                the device is gone
             */
             foreach (const KDiskInfo &info, m_disks) {
                 if (info.name == name) {
@@ -310,9 +310,9 @@ void KDiskManagerPrivate::timerEvent(QTimerEvent *event) {
                     break;
                 }
             }
-        } else {
+        } else if (qstrcmp(action, "bind") != 0 && qstrcmp(action, "unbind") != 0) {
+            // bind/unbind are driver changing for device type of event
             qWarning() << "unknown action" << action;
-            Q_UNREACHABLE();
         }
 
         dev = udev_monitor_receive_device(m_monitor);
