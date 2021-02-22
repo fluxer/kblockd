@@ -15,7 +15,6 @@
 #include <libudev.h>
 #include <sys/mount.h>
 #include <errno.h>
-#include <string.h>
 
 static const QStringList s_knownfstypes = QStringList()
         << "ext2"
@@ -293,7 +292,7 @@ void KDiskManagerPrivate::timerEvent(QTimerEvent *event) {
         } else if (qstrcmp(action, "change") == 0) {
             const KDiskInfo info = KDiskManagerPrivate::info(name);
             if (!info.isNull()) {
-                qDebug() << "change" << name;
+                qDebug() << "changed" << name;
                 m_disks.removeAll(info);
                 m_disks.append(info);
                 emit changedDisk(info);
@@ -478,7 +477,7 @@ bool KDiskManager::mount(const KDiskInfo &disk, const QString &directory) {
     qDebug() << "mounting" << disk << "to" << mountdir;
     const int rv = ::mount(disk.name.constData(), mountdir.constData(), disk.fstype.constData(), 0, Q_NULLPTR);
     if (rv != 0) {
-        qWarning() << ::strerror(errno);
+        qWarning() << qt_error_string(errno);
         return false;
     }
 
@@ -500,7 +499,7 @@ bool KDiskManager::unmount(const KDiskInfo &disk) {
     qDebug() << "unmounting" << disk;
     const int rv = ::umount2(mountdir.constData(), MNT_DETACH);
     if (rv != 0) {
-        qWarning() << ::strerror(errno);
+        qWarning() << qt_error_string(errno);
         return false;
     }
 

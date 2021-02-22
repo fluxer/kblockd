@@ -58,7 +58,7 @@ const QDBusArgument &operator<<(QDBusArgument &, const KDiskInfo &);
 const QDBusArgument &operator>>(const QDBusArgument &, KDiskInfo &);
 
 /*!
-    Block device (disk) manager, operates mostly with device names, e.g. /dev/sda1 and disk
+    Block device (disk) manager, operates mostly with device names e.g. /dev/sda1 and disk
     information type
 
     @see KDiskInfo
